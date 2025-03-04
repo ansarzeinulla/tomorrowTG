@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Tg Nick</title>
+</head>
+<body>
+    <h2>Find Tg Nick</h2>
+
+    <!-- Textarea & Button -->
+    <textarea id="inputText" placeholder="Enter document names (one per line)"></textarea>
+    <button id="fetchButton">Fetch Data</button>
+
+    <!-- Area to Display Result -->
+    <pre id="result">Results will appear here...</pre>
+
+    <!-- Firebase Initialization Using Modules -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBP9LKEycWqwnGG5vQRnqZ7ThAQrPf1jK0",
+            authDomain: "oxford-ansar.firebaseapp.com",
+            projectId: "oxford-ansar",
+            storageBucket: "oxford-ansar.appspot.com",
+            messagingSenderId: "1071189202434",
+            appId: "1:1071189202434:web:6c512b0a7221ec7c36f91b",
+            measurementId: "G-7YJCT2N8K7"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Function to Fetch Data from Firestore
+        async function fetchData() {
+            const inputText = document.getElementById("inputText").value;
+
+            // Split by lines, trim spaces, and filter out empty lines
+            let lines = inputText.split("\n").map(line => line.trim()).filter(line => line.length > 0);
+
+            // Validate line length (5 to 25 characters)
+            for (let line of lines) {
+                if (line.length < 5 || line.length > 25) {
+                    alert(`Each line must be between 5 and 25 characters: "${line}" is invalid.`);
+                    return;
+                }
+            }
+
+            // Fetch data for each valid line
+            let results = [];
+            for (let line of lines) {
+                const docRef = doc(db, "tg", line);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    results.push(docSnap.data().nick);
+                }
+            }
+
+            // Display results (or a message if no results found)
+            document.getElementById("result").textContent = results.length > 0 ? results.join("\n") : "No data found!";
+        }
+
+        // Add Event Listener to Button
+        document.getElementById("fetchButton").addEventListener("click", fetchData);
+    </script>
+</body>
+</html>
