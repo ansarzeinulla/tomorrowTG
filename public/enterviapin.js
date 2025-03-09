@@ -83,7 +83,7 @@ export async function loginWithPin(username, pin) {
                 getDoc(mainRef).then(mainSnap => {
                     const totalTime = mainSnap.exists() ? mainSnap.data().total : 0;
                     const totalLabel = document.createElement("p");
-                    totalLabel.textContent = `Total time for week: ${totalTime/60} minutes`;
+                    totalLabel.textContent = `Total time for week: ${(totalTime/60).toFixed(2)} minutes`;
                     recordsContainer.appendChild(totalLabel);
                 }).catch(error => console.error("Error fetching total time:", error));
 
@@ -99,7 +99,7 @@ export async function loginWithPin(username, pin) {
                         const diff = data.diff;
 
                         const recordLabel = document.createElement("p");
-                        recordLabel.textContent = `${begin} + ${diff/60}m = ${end}`;
+                        recordLabel.textContent = `${begin} + ${(diff/60).toFixed(2)}m = ${end}`;
                         recordsContainer.appendChild(recordLabel);
                     });
                 }).catch(error => console.error("Error fetching records:", error));
