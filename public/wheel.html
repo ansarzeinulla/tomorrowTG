@@ -122,9 +122,11 @@
                         let finalLetter = letters[Math.floor(Math.random() * letters.length)];
                         reel.textContent = finalLetter;
                         results[index] = finalLetter;
-    
-                        if (results.length === 3 && results.every(letter => letter === 'A')) {
-                            celebrate();
+                        console.log(results);
+                        if (results.length == 3) {
+                            if (results[0] == 'A' && results[1] == 'A' && results[2] == 'A'){
+                                celebrate();
+                            }
                         }
                     }
                 }, 100);
