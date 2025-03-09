@@ -53,6 +53,7 @@ async function loginWithPin(username, pin) {
         return false;
     }
 }
+
 // Handle login button click
 document.getElementById("loginButton").addEventListener("click", async function() {
     const username = document.getElementById("loginInput").value;
@@ -79,12 +80,11 @@ document.getElementById("loginButton").addEventListener("click", async function(
         });
 
         document.getElementById("deleteMyEventBtn").addEventListener("click", function() {
-            document.getElementById("deleteMyEventFormContainer").style.display = "block";
+            document.getElementById("deleteEventFormContainer").style.display = "block";
             document.getElementById("actionButtons").style.display = "none";
         });
     }
 });
-
 
 // Handle send event form submission
 document.getElementById("sendEventForm").addEventListener("submit", function(event) {
@@ -128,7 +128,7 @@ function formatEventDate(date) {
     return `${month} ${day} ${hours}:${minutes}`; // Format as "MonthName Day Hour:Minute"
 }
 
-
+// Function to get events by author and display them
 export async function getMyEvents() {
     const eventsContainer = document.getElementById('eventsContainer');
     
@@ -146,20 +146,15 @@ export async function getMyEvents() {
     }
 
     try {
-        // Query events by author
         const eventsRef = collection(db, 'events');
         const q = query(eventsRef, where("author", "==", authorName));
         const snapshot = await getDocs(q);
-
-        console.log("Fetched events snapshot:", snapshot);
 
         const events = [];
 
         snapshot.forEach(docSnap => {
             const eventData = docSnap.data();
-            const docId = docSnap.id; // Get the document ID
-
-            console.log("Event Data from doc:", eventData);
+            const docId = docSnap.id;
 
             const { author, name, location, date } = eventData;
 
@@ -194,15 +189,14 @@ export async function getMyEvents() {
     }
 }
 
-
 // Handle "Get My Events" button click
 document.getElementById("getMyEventsBtnTrigger").addEventListener("click", function() {
     getMyEvents();
 });
 
-// Function to delete event (currently empty)
+// Function to delete event
 export async function deleteEvent() {
-    const eventId = document.getElementById('eventIdInput').value.trim(); // Get the event ID
+    const eventId = document.getElementById('eventIdInput').value.trim();
 
     if (!eventId) {
         alert("Please enter a valid event ID.");
@@ -210,31 +204,24 @@ export async function deleteEvent() {
     }
 
     try {
-        // Reference to the event document in Firestore
         const eventDocRef = doc(db, "events", eventId);
-
-        // Delete the document from Firestore
         await deleteDoc(eventDocRef);
-
-        // If successful, show a success message
         alert("Event deleted successfully!");
     } catch (error) {
         console.error("Error deleting event:", error);
-        // If error occurs, show an error message
         alert("Error deleting event. Please try again.");
     }
 }
 
 // Handle delete event form submission
 document.getElementById("deleteEventBtn").addEventListener("click", function() {
-    const eventIdToDelete = document.getElementById("eventIdToDelete").value.trim();
+    const eventIdToDelete = document.getElementById("eventIdInput").value.trim();
     if (!eventIdToDelete) {
         alert("Please enter an event ID to delete.");
         return;
     }
 
-    deleteMyEvent(eventIdToDelete);
-
-    document.getElementById("deleteMyEventFormContainer").style.display = "none";
+    deleteEvent(eventIdToDelete);
+    document.getElementById("deleteEventFormContainer").style.display = "none";
     document.getElementById("actionButtons").style.display = "block";
 });

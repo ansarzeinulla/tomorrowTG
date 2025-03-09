@@ -39,16 +39,14 @@
     <div id="getMyEventsFormContainer" style="display:none;">
         <input type="text" id="authorName" placeholder="Enter Author's Name">
         <button id="getMyEventsBtnTrigger">Get My Events</button>
-        <div id="eventsList"></div>
+        <div id="eventsContainer"></div> <!-- Added container for events -->
     </div>
 
     <!-- Delete My Event Form (Hidden until triggered) -->
-    <!-- Delete Event Form -->
-    <div id="deleteEventForm" style="display:none;">
+    <div id="deleteEventFormContainer" style="display:none;">
         <input type="text" id="eventIdInput" placeholder="Enter Event ID to Delete">
-        <button id="deleteEventButton">Delete Event</button>
+        <button id="deleteEventBtn">Delete Event</button>
     </div>
-
 
     <div id="responseMessage"></div>
 </body>
