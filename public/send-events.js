@@ -10,13 +10,12 @@ async function sendEvent(eventData) {
         // Add new event document to Firestore
         await addDoc(eventsRef, eventData);
 
-        // Display success message
-        document.getElementById("responseMessage").textContent = "Event successfully sent!";
-        document.getElementById("responseMessage").style.color = "green";
+        // Show an alert on successful event submission
+        alert("Event successfully sent!");
     } catch (error) {
         console.error("Error adding event:", error);
-        document.getElementById("responseMessage").textContent = "Error sending event.";
-        document.getElementById("responseMessage").style.color = "red";
+        // Show an alert on error
+        alert("Error sending event.");
     }
 }
 
