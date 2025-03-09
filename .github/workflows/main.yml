@@ -25,8 +25,12 @@ jobs:
 
     # Authenticate with Firebase using the token stored in the secret
     - name: Authenticate to Firebase
-      run: firebase use --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
+      run: firebase login --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
+
+    # Select Firebase project (use your actual Firebase project ID here)
+    - name: Select Firebase project
+      run: firebase use --add --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
 
     # Deploy to Firebase Hosting (if you already have the static files)
     - name: Deploy to Firebase Hosting
-      run: firebase deploy --only hosting --project your-project-id
+      run: firebase deploy --only hosting --project your-project-id --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
