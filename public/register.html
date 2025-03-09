@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script type="module" src="register.js"></script>
+</head>
+<body>
+    <h2>Register</h2>
+    <form id="registerForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" minlength="4" maxlength="25" required>
+    
+        <label for="nick">Nick:</label>
+        <input type="text" id="nick" minlength="4" maxlength="25" required>
+    
+        <label for="tgnick">Telegram Nick:</label>
+        <input type="text" id="tgnick" minlength="4" maxlength="25" required>
+    
+        <label for="pin">PIN (0-6 digits):</label>
+        <input type="number" id="pin" min="0" max="999999" required>
+    
+        <button type="submit">Register</button>
+    </form>
+    
+
+    <p id="message"></p>
+</body>
+</html>
