@@ -128,11 +128,21 @@ function getWeekNumber(timestamp) {
         return null;
     }
 
+    // Get the first day of the year (1st January)
     const oneJan = new Date(date.getFullYear(), 0, 1);
+
+    // Get the number of days since 1st January
     const days = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000));
+
+    // Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
+    const dayOfWeek = date.getDay();
+
+    // Adjust the week number calculation to account for Monday as the start of the week
+    const adjustedDayOfWeek = (dayOfWeek === 0) ? 7 : dayOfWeek; // If it's Sunday (0), treat it as 7
     
-    return Math.ceil((days + oneJan.getDay() + 1) / 7);
+    return Math.ceil((days + adjustedDayOfWeek) / 7);
 }
+
 // Function to format timestamp as a valid Firestore document ID
 function formatTimestampToId(timestamp) {
     if (timestamp && typeof timestamp.toDate === "function") {
