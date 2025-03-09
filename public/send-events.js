@@ -128,9 +128,15 @@ function formatEventDate(date) {
     return `${month} ${day} ${hours}:${minutes}`; // Format as "MonthName Day Hour:Minute"
 }
 
-// Function to get events by author and display them
+
 export async function getMyEvents() {
     const eventsContainer = document.getElementById('eventsContainer');
+    
+    if (!eventsContainer) {
+        console.error("eventsContainer element not found.");
+        return; // Exit if the element doesn't exist
+    }
+
     eventsContainer.innerHTML = '';  // Clear existing events
     const authorName = document.getElementById('authorNameInput').value.trim();
 
@@ -145,57 +151,49 @@ export async function getMyEvents() {
         const q = query(eventsRef, where("author", "==", authorName));
         const snapshot = await getDocs(q);
 
-        console.log("Fetched events snapshot:", snapshot); // Debugging line to log the snapshot
+        console.log("Fetched events snapshot:", snapshot);
 
         const events = [];
 
-        // Loop through all documents
         snapshot.forEach(docSnap => {
             const eventData = docSnap.data();
             const docId = docSnap.id; // Get the document ID
 
-            console.log("Event Data from doc:", eventData); // Debugging to see event data
+            console.log("Event Data from doc:", eventData);
 
-            // Get event details
             const { author, name, location, date } = eventData;
 
-            // Make sure we have a valid timestamp
             if (date && author && name && location) {
-                const eventDate = date.toDate(); // Correctly convert Firestore Timestamp to JavaScript Date object
-                console.log("Event Date:", eventDate); // Debugging to see the event date
-
+                const eventDate = date.toDate();
                 events.push({
                     author,
                     name,
                     location,
                     date: eventDate,
-                    id: docId, // Add document ID to event data
+                    id: docId,
                 });
             }
         });
 
-        console.log("Filtered events:", events); // Debugging line to show filtered events
-
-        // If no events found, display a message
         if (events.length === 0) {
             eventsContainer.innerHTML = '<p>No events found for this author.</p>';
         } else {
-            // Display the events in the required format
             events.forEach(event => {
                 const eventLabel = document.createElement('p');
-                const formattedDate = formatEventDate(event.date); // Format the date using the new function
+                const formattedDate = formatEventDate(event.date);
 
-                // Create the event label: "Date: Name 'at' Location (author) [Document ID]"
                 eventLabel.textContent = `${formattedDate} - ${event.name} at ${event.location} (${event.author}) [ID: ${event.id}]`;
                 eventsContainer.appendChild(eventLabel);
             });
         }
-
     } catch (error) {
         console.error("Error fetching events:", error);
-        eventsContainer.innerHTML = '<p>Error fetching events</p>';
+        if (eventsContainer) {
+            eventsContainer.innerHTML = '<p>Error fetching events</p>';
+        }
     }
 }
+
 
 // Handle "Get My Events" button click
 document.getElementById("getMyEventsBtnTrigger").addEventListener("click", function() {
