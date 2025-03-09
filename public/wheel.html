@@ -130,7 +130,7 @@
                         if (stoppedReels === 3) {
                             console.log(results);
                             spinButton.style.visibility = 'visible'; // Show the button again after spinning
-                            if (results.every(letter => letter === 'A')) {
+                            if (results[0] == results[1] && results[1] == results[2]) {
                                 celebrate();
                             }
                         }
