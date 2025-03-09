@@ -37,12 +37,13 @@
             transition: transform 3s ease-in-out;
         }
 
-        .wheel div {
+        .section {
             position: absolute;
             width: 50%;
             height: 50%;
             background-color: red;
             transform-origin: 100% 100%;
+            transition: transform 3s ease-in-out;
         }
 
         .green {
@@ -81,15 +82,15 @@
     <div>
         <div class="wheel-container">
             <div id="wheel" class="wheel">
-                <!-- 99% Red -->
-                <div class="section red" style="transform: rotate(0deg);"></div>
-                <div class="section red" style="transform: rotate(3.6deg);"></div>
-                <div class="section red" style="transform: rotate(7.2deg);"></div>
-                <div class="section red" style="transform: rotate(10.8deg);"></div>
-                <div class="section red" style="transform: rotate(14.4deg);"></div>
-                <div class="section red" style="transform: rotate(18deg);"></div>
-                <!-- 1% Green -->
-                <div class="section green" style="transform: rotate(360 - 3.6deg);"></div>
+                <!-- 99% Red Sections (359.6 degrees) -->
+                <div class="section" style="transform: rotate(0deg);"></div>
+                <div class="section" style="transform: rotate(4deg);"></div>
+                <div class="section" style="transform: rotate(8deg);"></div>
+                <div class="section" style="transform: rotate(12deg);"></div>
+                <div class="section" style="transform: rotate(16deg);"></div>
+                <div class="section" style="transform: rotate(20deg);"></div>
+                <!-- 1% Green Section (3.6 degrees) -->
+                <div class="section green" style="transform: rotate(356deg);"></div>
             </div>
         </div>
         <button class="spin-btn" id="spinButton">Spin</button>
@@ -116,9 +117,9 @@
 
             // Wait until the wheel finishes spinning, then display the result
             setTimeout(() => {
-                // After spinning, check if the green section is at the top (i.e., angle is between 0 and 3.6 degrees)
+                // After spinning, check if the green section is at the top (i.e., angle is between 356 and 360 degrees)
                 const finalRotation = randomRotation % 360;
-                if (finalRotation <= 3.6) {
+                if (finalRotation >= 356 || finalRotation < 4) {
                     resultDiv.classList.remove('hidden');
                 } else {
                     loseMessageDiv.classList.remove('hidden');
