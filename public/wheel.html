@@ -3,129 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wheel of Fortune</title>
+    <title>Slot Machine</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0f0f0;
             margin: 0;
+            background-color: #222;
         }
 
-        .wheel-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
+        .slot-machine-container {
+            width: 350px;
+            height: 450px;
+            background-color: #222;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(233, 219, 16, 0.7);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slot-machine {
+            display: flex;
+            gap: 20px;
+        }
+
+        .reel {
+            width: 80px;
+            height: 100px;
+            background-color: #111;
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            font-size: 3rem;
+            font-weight: bold;
+            border-radius: 10px;
+            border: 3px solid #00ff00; /* Fancy green border to mimic a slot machine look */
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
         }
 
-        .wheel {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            clip-path: circle(50%);
-            transform-origin: center;
-            transition: transform 3s ease-in-out;
-        }
-
-        .section {
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            background-color: red;
-            transform-origin: 100% 100%;
-            transition: transform 3s ease-in-out;
-        }
-
-        .green {
-            background-color: green;
-        }
-
-        .spin-btn {
+        button {
             margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #ff9900;
-            border: none;
+            padding: 15px 30px;
+            font-size: 1.5rem;
+            background-color: #00ff00;
             color: white;
-            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
             cursor: pointer;
-            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
             transition: background-color 0.3s;
         }
 
-        .spin-btn:hover {
-            background-color: #e68a00;
+        button:hover {
+            background-color: #4CAF50;
         }
 
-        .result {
-            margin-top: 20px;
-            font-size: 1.5rem;
+        button:active {
+            background-color: #45a049;
+        }
+
+        .slot-machine-header {
+            color: #fff;
+            font-size: 2rem;
             font-weight: bold;
-            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Arial', sans-serif;
         }
-
-        .hidden {
-            display: none;
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <div>
-        <div class="wheel-container">
-            <div id="wheel" class="wheel">
-                <!-- 99% Red Sections (359.6 degrees) -->
-                <div class="section" style="transform: rotate(0deg);"></div>
-                <div class="section" style="transform: rotate(4deg);"></div>
-                <div class="section" style="transform: rotate(8deg);"></div>
-                <div class="section" style="transform: rotate(12deg);"></div>
-                <div class="section" style="transform: rotate(16deg);"></div>
-                <div class="section" style="transform: rotate(20deg);"></div>
-                <!-- 1% Green Section (3.6 degrees) -->
-                <div class="section green" style="transform: rotate(356deg);"></div>
-            </div>
+
+    <div class="slot-machine-container">
+        <div class="slot-machine-header">Casino Slot Machine</div>
+        <div class="slot-machine">
+            <div class="reel" id="reel1">A</div>
+            <div class="reel" id="reel2">A</div>
+            <div class="reel" id="reel3">A</div>
         </div>
-        <button class="spin-btn" id="spinButton">Spin</button>
-        <div id="result" class="result hidden">You Win!</div>
-        <div id="loseMessage" class="result hidden">You Lose!</div>
+        <button onclick="spin()">Spin</button>
+        <div id="winner-message" style="display: none; font-size: 24px; color: gold; margin-top: 10px;">🎉 Winner! 🎉</div>
     </div>
-
+    
+    <canvas id="confettiCanvas"></canvas>
+    
     <script>
-        const spinButton = document.getElementById('spinButton');
-        const wheel = document.getElementById('wheel');
-        const resultDiv = document.getElementById('result');
-        const loseMessageDiv = document.getElementById('loseMessage');
-
-        spinButton.addEventListener('click', () => {
-            // Generate a random number between 0 and 360 (angle of rotation)
-            const randomRotation = Math.floor(Math.random() * 360);
-
-            // Show the spinning animation
-            wheel.style.transform = `rotate(${randomRotation + 3600}deg)`; // Spin 10 full rotations
-
-            // Reset the results divs
-            resultDiv.classList.add('hidden');
-            loseMessageDiv.classList.add('hidden');
-
-            // Wait until the wheel finishes spinning, then display the result
-            setTimeout(() => {
-                // After spinning, check if the green section is at the top (i.e., angle is between 356 and 360 degrees)
-                const finalRotation = randomRotation % 360;
-                if (finalRotation >= 356 || finalRotation < 4) {
-                    resultDiv.classList.remove('hidden');
-                } else {
-                    loseMessageDiv.classList.remove('hidden');
-                }
-            }, 3000); // Delay matches the spinning time (3 seconds)
-        });
+        const letters = ['A', 'B', 'C', 'D', 'E', 'F']; // Possible letters
+    
+        function spin() {
+            let reels = document.querySelectorAll('.reel');
+            let results = [];
+            
+            reels.forEach((reel, index) => {
+                let spins = Math.floor(Math.random() * 20) + 10;
+                let count = 0;
+                let interval = setInterval(() => {
+                    let randomLetter = letters[Math.floor(Math.random() * letters.length)];
+                    reel.textContent = randomLetter;
+                    count++;
+    
+                    if (count >= spins) {
+                        clearInterval(interval);
+                        let finalLetter = letters[Math.floor(Math.random() * letters.length)];
+                        reel.textContent = finalLetter;
+                        results[index] = finalLetter;
+    
+                        if (results.length === 3 && results.every(letter => letter === 'A')) {
+                            celebrate();
+                        }
+                    }
+                }, 100);
+            });
+        }
+    
+        function celebrate() {
+            document.getElementById('winner-message').style.display = 'block';
+            startConfetti();
+        }
+    
+        function startConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+    
+            let confetti = [];
+            for (let i = 0; i < 100; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 5 + 5,
+                    speed: Math.random() * 3 + 2,
+                    color: `hsl(${Math.random() * 360}, 100%, 50%)`
+                });
+            }
+    
+            function drawConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                confetti.forEach(p => {
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    p.y += p.speed;
+                    if (p.y > canvas.height) p.y = 0;
+                });
+                requestAnimationFrame(drawConfetti);
+            }
+            drawConfetti();
+        }
     </script>
 </body>
 </html>
