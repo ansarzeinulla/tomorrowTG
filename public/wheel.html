@@ -96,7 +96,7 @@
             <div class="reel" id="reel2">A</div>
             <div class="reel" id="reel3">A</div>
         </div>
-        <button onclick="spin()">Spin</button>
+        <button id="spin-button" onclick="spin()">Spin</button>
         <div id="winner-message" style="display: none; font-size: 24px; color: gold; margin-top: 10px;">🎉 Winner! 🎉</div>
     </div>
     
@@ -106,35 +106,38 @@
         const letters = ['A', 'B', 'C', 'D', 'E', 'F']; // Possible letters
     
         function spin() {
-        let reels = document.querySelectorAll('.reel');
-        let results = new Array(3);
-        let stoppedReels = 0;
-        
-        reels.forEach((reel, index) => {
-            let spins = Math.floor(Math.random() * 20) + 10;
-            let count = 0;
-            let interval = setInterval(() => {
-                let randomLetter = letters[Math.floor(Math.random() * letters.length)];
-                reel.textContent = randomLetter;
-                count++;
-
-                if (count >= spins) {
-                    clearInterval(interval);
-                    let finalLetter = letters[Math.floor(Math.random() * letters.length)];
-                    reel.textContent = finalLetter;
-                    results[index] = finalLetter;
-                    stoppedReels++;
-
-                    if (stoppedReels === 3) {
-                        console.log(results);
-                        if (results[0] == results[1] && results[1] == results[2]) {
-                            celebrate();
+            let reels = document.querySelectorAll('.reel');
+            let results = new Array(3);
+            let stoppedReels = 0;
+            let spinButton = document.getElementById('spin-button');
+            spinButton.style.visibility = 'hidden'; // Hide the button while spinning
+            
+            reels.forEach((reel, index) => {
+                let spins = Math.floor(Math.random() * 20) + 10;
+                let count = 0;
+                let interval = setInterval(() => {
+                    let randomLetter = letters[Math.floor(Math.random() * letters.length)];
+                    reel.textContent = randomLetter;
+                    count++;
+    
+                    if (count >= spins) {
+                        clearInterval(interval);
+                        let finalLetter = letters[Math.floor(Math.random() * letters.length)];
+                        reel.textContent = finalLetter;
+                        results[index] = finalLetter;
+                        stoppedReels++;
+    
+                        if (stoppedReels === 3) {
+                            console.log(results);
+                            spinButton.style.visibility = 'visible'; // Show the button again after spinning
+                            if (results.every(letter => letter === 'A')) {
+                                celebrate();
+                            }
                         }
                     }
-                }
-            }, 100);
-        });
-    }
+                }, 100);
+            });
+        }
     
         function celebrate() {
             document.getElementById('winner-message').style.display = 'block';
