@@ -1,3 +1,7 @@
+import { db } from "./firebase.js"; // Import the db from firebase
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+
+
 // Function to format event data in the format "MonthName Day Hour:Minute"
 function formatEventDate(date) {
     const monthNames = [
