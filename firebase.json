@@ -9,11 +9,7 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**",
-      "**/firebase.js",
-      "**/getusers.js",
-      "**/getevents.js",
-      "**/enterviapin.js"
+      "**/node_modules/**"
     ],
     "rewrites": [
       {
@@ -35,4 +31,3 @@
     ]
   }
 }
-
