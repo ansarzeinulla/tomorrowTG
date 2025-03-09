@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Events</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to your shared stylesheet -->
+</head>
+<body>
+
+    <div class="column">
+        <h2>Send New Event</h2>
+
+        <!-- Form to submit new event -->
+        <form id="sendEventForm">
+            <input type="text" id="eventName" placeholder="Event Name" required><br><br>
+            <input type="text" id="eventAuthor" placeholder="Author" required><br><br>
+            <input type="text" id="eventLocation" placeholder="Location" required><br><br>
+            <input type="datetime-local" id="eventDate" required><br><br>
+            <button type="submit">Send Event</button>
+        </form>
+
+        <div id="responseMessage"></div>
+    </div>
+
+    <!-- Load Scripts -->
+    <script type="module" src="send-events.js"></script>
+
+</body>
+</html>
