@@ -4,7 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "site": "test-50593", 
+    "site": "aitomorrow", 
     "public": "public",
     "ignore": [
       "firebase.json",
@@ -13,11 +13,19 @@
     ],
     "rewrites": [
       {
+        "source": "/events",
+        "destination": "/send-events.html"
+      },
+      {
         "source": "/send-events",
         "destination": "/send-events.html"
       },
       {
         "source": "/wheel",
+        "destination": "/wheel.html"
+      },
+      {
+        "source": "/casino",
         "destination": "/wheel.html"
       }
     ]
