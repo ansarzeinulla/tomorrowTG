@@ -1,5 +1,17 @@
-import { db } from "./firebase.js";
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+// Function to format event data in the format "MonthName Day Hour:Minute"
+function formatEventDate(date) {
+    const monthNames = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+
+    const month = monthNames[date.getMonth()]; // Get month name
+    const day = date.getDate();
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+
+    return `${month} ${day} ${hours}:${minutes}`; // Format as "MonthName Day Hour:Minute"
+}
 
 // Function to populate events in the events container
 export async function populateEvents() {
@@ -63,7 +75,7 @@ export async function populateEvents() {
             // Display the events in the required format
             events.forEach(event => {
                 const eventLabel = document.createElement('p');
-                const formattedDate = event.date.toLocaleDateString(); // Format the date for display
+                const formattedDate = formatEventDate(event.date); // Format the date using the new function
 
                 // Create the event label: "Date: Name 'at' Location (author)"
                 eventLabel.textContent = `Date: ${formattedDate} - ${event.name} at ${event.location} (${event.author})`;
