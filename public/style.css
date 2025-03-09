@@ -26,6 +26,8 @@ textarea, input {
 textarea {
     max-height: 150px; /* Limit the height of the textarea */
     max-width: 100%; /* Ensures the width stays within the container */
+    min-height: 80px; /* Minimum height for the textarea */
+    min-width: 100%; /* Ensures the width does not shrink below container width */
     overflow: auto; /* Adds a scrollbar when the content exceeds max-height */
 }
 
