@@ -23,9 +23,9 @@ jobs:
     - name: Install Firebase CLI
       run: npm install -g firebase-tools
 
-    # Select Firebase project (use your actual Firebase project ID here)
-    - name: Select Firebase project
-      run: firebase use --add --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
+    # Authenticate to Firebase using the token from GitHub secrets (NO 'firebase login' command here)
+    - name: Authenticate with Firebase
+      run: firebase use --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
 
     # Deploy to Firebase Hosting (if you already have the static files)
     - name: Deploy to Firebase Hosting
