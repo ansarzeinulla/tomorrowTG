@@ -53,7 +53,6 @@ async function loginWithPin(username, pin) {
         return false;
     }
 }
-
 // Handle login button click
 document.getElementById("loginButton").addEventListener("click", async function() {
     const username = document.getElementById("loginInput").value;
@@ -62,6 +61,13 @@ document.getElementById("loginButton").addEventListener("click", async function(
     const loginSuccess = await loginWithPin(username, pin);
 
     if (loginSuccess) {
+        // Show action buttons after successful login
+        document.getElementById("sendNewEventBtn").style.display = "block";
+        document.getElementById("getMyEventsBtn").style.display = "block";
+        document.getElementById("deleteMyEventBtn").style.display = "block";
+        document.getElementById("actionButtons").style.display = "block"; // Show action buttons
+
+        // Attach event listeners to action buttons after login
         document.getElementById("sendNewEventBtn").addEventListener("click", function() {
             document.getElementById("sendEventFormContainer").style.display = "block";
             document.getElementById("actionButtons").style.display = "none";
@@ -78,6 +84,7 @@ document.getElementById("loginButton").addEventListener("click", async function(
         });
     }
 });
+
 
 // Handle send event form submission
 document.getElementById("sendEventForm").addEventListener("submit", function(event) {
