@@ -10,6 +10,8 @@
     
     <!-- 1st Column: Find Users -->
     <div class="column">
+        <h2>Next events</h2>
+        <div id="eventsContainer"></div> <!-- Empty div for events -->
         <h2>Find Users</h2>
         <textarea id="inputText" placeholder="Enter Telegram nicks (one per line)"></textarea>
         <button id="fetchButton">Get</button>
@@ -18,7 +20,7 @@
 
     <!-- 2nd Column: Login with PIN -->
     <div class="column">
-        <h2 id="loginHeader">Login</h2> <!-- Added ID for easier selection -->
+        <h2 id="loginHeader">Login</h2>
         <input type="text" id="loginInput" placeholder="Enter Username" minlength="5" maxlength="20">
         <input type="number" id="pinInput" placeholder="Enter PIN Code (6 digits)" min="0" max="999999">
         <button id="enterButton">Enter</button>
@@ -29,10 +31,17 @@
     <!-- Load Scripts -->
     <script type="module" src="./getusers.js"></script>
     <script type="module" src="./enterviapin.js"></script>
+    <script type="module" src="./getevents.js"></script> <!-- Add getevents.js -->
 
     <script type="module">
         import { fetchAndDisplayUsers } from "./getusers.js";
         import { loginWithPin } from "./enterviapin.js";
+        import { populateEvents } from "./getevents.js"; // Import the populateEvents function
+
+        // Call populateEvents function after the DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            populateEvents(); // This will populate the events container
+        });
 
         document.getElementById("fetchButton").addEventListener("click", fetchAndDisplayUsers);
         document.getElementById("enterButton").addEventListener("click", () => {
