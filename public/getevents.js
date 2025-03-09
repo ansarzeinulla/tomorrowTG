@@ -11,11 +11,14 @@ export async function populateEvents() {
         const eventsRef = collection(db, 'events');
         const snapshot = await getDocs(eventsRef);
 
+        console.log("Fetched events snapshot:", snapshot); // Debugging line to log the snapshot
+
         const events = [];
 
         // Loop through all documents
         snapshot.forEach(docSnap => {
             const eventData = docSnap.data();
+            console.log("Event Data from doc:", eventData); // Debugging to see event data
 
             // Get event details
             const { author, name, location, Date } = eventData;
@@ -23,14 +26,18 @@ export async function populateEvents() {
             // Make sure we have a valid timestamp
             if (Date && author && name && location) {
                 const eventDate = Date.toDate(); // Convert Firestore Timestamp to JavaScript Date object
+                console.log("Event Date:", eventDate); // Debugging to see the event date
 
                 // Calculate the difference in time from the current date
                 const currentDate = new Date();
                 const timeDiff = eventDate - currentDate;
+                console.log("Time Difference:", timeDiff); // Debugging to see time difference
+
                 const sevenDaysInMilliseconds = 7 * 24 * 60 * 60 * 1000;
 
                 // Check if the event is in the next 7 days or today
                 if (timeDiff >= 0 && timeDiff <= sevenDaysInMilliseconds) {
+                    console.log("Event is within the next 7 days:", eventData);
                     events.push({
                         author,
                         name,
@@ -38,11 +45,16 @@ export async function populateEvents() {
                         date: eventDate,
                     });
                 }
+            } else {
+                console.log("Event data is incomplete, skipping:", eventData); // Debugging for incomplete data
             }
         });
 
+        console.log("Filtered events:", events); // Debugging line to show filtered events
+
         // Sort events by date (today's events first)
         events.sort((a, b) => a.date - b.date);
+        console.log("Sorted events:", events); // Debugging line to show sorted events
 
         // If no events found, display a message
         if (events.length === 0) {
