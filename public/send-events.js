@@ -205,6 +205,14 @@ export async function deleteEvent() {
 
     try {
         const eventDocRef = doc(db, "events", eventId);
+        const eventDocSnap = await getDoc(eventDocRef); // Check if the document exists
+
+        if (!eventDocSnap.exists()) {
+            alert("Event not found.");
+            return;
+        }
+
+        // If the document exists, delete it
         await deleteDoc(eventDocRef);
         alert("Event deleted successfully!");
     } catch (error) {
@@ -212,6 +220,7 @@ export async function deleteEvent() {
         alert("Error deleting event. Please try again.");
     }
 }
+
 
 // Handle delete event form submission
 document.getElementById("deleteEventBtn").addEventListener("click", function() {
