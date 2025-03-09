@@ -128,26 +128,22 @@ function getWeekNumber(timestamp) {
         return null;
     }
 
-    // Get the first day of the year (1st January)
-    const oneJan = new Date(date.getFullYear(), 0, 1);
+    // Define the reference date: March 3rd, 2025 (Monday of week 10)
+    const referenceDate = new Date(2025, 2, 3); // Month is 0-based, so 2 is March
 
-    // Get the number of days since 1st January
-    const days = Math.floor((date - oneJan) / (24 * 60 * 60 * 1000));
+    // Calculate the difference in time (in milliseconds) between the given date and the reference date
+    const timeDifference = date - referenceDate;
 
-    // Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
-    const dayOfWeek = date.getDay();
+    // Convert the time difference into days
+    const daysDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
 
-    // Adjust the day of the week to treat Monday as the first day of the week
-    // If it's Sunday (0), treat it as day 7 (last day of the week)
-    const adjustedDayOfWeek = (dayOfWeek === 0) ? 7 : dayOfWeek;
-
-    // Adjust the calculation to use Monday as the first day of the week
-    // If the days are less than 0, we should treat the week as the previous week
-    const weekNumber = Math.ceil((days + adjustedDayOfWeek - 1) / 7);
+    // Calculate the number of full weeks between the reference date and the given date
+    const weekNumber = Math.floor(daysDifference / 7) + 10; // Add 10 to match the week number
 
     console.log(weekNumber);
     return weekNumber;
 }
+
 
 
 // Function to format timestamp as a valid Firestore document ID
