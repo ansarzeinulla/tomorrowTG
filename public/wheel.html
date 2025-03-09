@@ -106,32 +106,35 @@
         const letters = ['A', 'B', 'C', 'D', 'E', 'F']; // Possible letters
     
         function spin() {
-            let reels = document.querySelectorAll('.reel');
-            let results = [];
-            
-            reels.forEach((reel, index) => {
-                let spins = Math.floor(Math.random() * 20) + 10;
-                let count = 0;
-                let interval = setInterval(() => {
-                    let randomLetter = letters[Math.floor(Math.random() * letters.length)];
-                    reel.textContent = randomLetter;
-                    count++;
-    
-                    if (count >= spins) {
-                        clearInterval(interval);
-                        let finalLetter = letters[Math.floor(Math.random() * letters.length)];
-                        reel.textContent = finalLetter;
-                        results[index] = finalLetter;
+        let reels = document.querySelectorAll('.reel');
+        let results = new Array(3);
+        let stoppedReels = 0;
+        
+        reels.forEach((reel, index) => {
+            let spins = Math.floor(Math.random() * 20) + 10;
+            let count = 0;
+            let interval = setInterval(() => {
+                let randomLetter = letters[Math.floor(Math.random() * letters.length)];
+                reel.textContent = randomLetter;
+                count++;
+
+                if (count >= spins) {
+                    clearInterval(interval);
+                    let finalLetter = letters[Math.floor(Math.random() * letters.length)];
+                    reel.textContent = finalLetter;
+                    results[index] = finalLetter;
+                    stoppedReels++;
+
+                    if (stoppedReels === 3) {
                         console.log(results);
-                        if (results.length == 3) {
-                            if (results[0] == 'A' && results[1] == 'A' && results[2] == 'A'){
-                                celebrate();
-                            }
+                        if (results[0] == results[1] && results[1] == results[2]) {
+                            celebrate();
                         }
                     }
-                }, 100);
-            });
-        }
+                }
+            }, 100);
+        });
+    }
     
         function celebrate() {
             document.getElementById('winner-message').style.display = 'block';
