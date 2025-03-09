@@ -62,7 +62,7 @@ function displayUsers(users) {
 
         // If VIP is "king", apply fancy styling
         if (user.vip === "king") {
-            button.style.color = "gold";
+            button.style.color = "black";
             button.style.fontWeight = "bold";
             button.style.fontSize = "16px";
             button.style.textShadow = "0 0 10px gold, 0 0 20px orange";
