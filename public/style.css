@@ -24,10 +24,10 @@ textarea, input {
 }
 
 textarea {
-    max-height: 150px; /* Limit the height of the textarea */
-    max-width: 100%; /* Ensures the width stays within the container */
-    min-height: 80px; /* Minimum height for the textarea */
-    min-width: 100%; /* Ensures the width does not shrink below container width */
+    max-height: 450px; /* Max height is now 3 times bigger than 150px */
+    max-width: 50%; /* Max width will be 50% of the screen width */
+    min-height: 120px; /* Increased the min-height to 120px */
+    min-width: 80%; /* Ensures the width is at least 80% of the screen width */
     overflow: auto; /* Adds a scrollbar when the content exceeds max-height */
 }
 
@@ -74,6 +74,7 @@ button {
         padding: 8px 16px; /* Adjusts padding for buttons */
     }
     textarea {
-        max-height: 120px; /* Makes the textarea a bit smaller on very small screens */
+        max-height: 300px; /* Decreased max height on very small screens */
+        min-height: 150px; /* Increased min height for small screens */
     }
 }
