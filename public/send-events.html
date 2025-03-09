@@ -17,19 +17,38 @@
         <button id="loginButton">Login</button>
     </div>
 
-    <!-- Event Form (Hidden until login is successful) -->
-    <div id="eventForm" style="display:none;">
+    <!-- Action Buttons (Hidden until login is successful) -->
+    <div id="actionButtons" style="display:none;">
+        <button id="sendNewEventBtn">Send New Event</button>
+        <button id="getMyEventsBtn">Get My Events</button>
+        <button id="deleteMyEventBtn">Delete My Event</button>
+    </div>
+
+    <!-- Send New Event Form (Hidden until triggered) -->
+    <div id="sendEventFormContainer" style="display:none;">
         <form id="sendEventForm">
             <input type="text" id="eventName" placeholder="Event Name">
             <input type="text" id="eventAuthor" placeholder="Event Author">
             <input type="text" id="eventLocation" placeholder="Event Location">
-            
-            <!-- Date-Time Input -->
             <input type="datetime-local" id="eventDateTime" placeholder="Event Date and Time">
-
             <button type="submit">Send Event</button>
         </form>
     </div>
+
+    <!-- Get My Events Form (Hidden until triggered) -->
+    <div id="getMyEventsFormContainer" style="display:none;">
+        <input type="text" id="authorName" placeholder="Enter Author's Name">
+        <button id="getMyEventsBtnTrigger">Get My Events</button>
+        <div id="eventsList"></div>
+    </div>
+
+    <!-- Delete My Event Form (Hidden until triggered) -->
+    <!-- Delete Event Form -->
+    <div id="deleteEventForm" style="display:none;">
+        <input type="text" id="eventIdInput" placeholder="Enter Event ID to Delete">
+        <button id="deleteEventButton">Delete Event</button>
+    </div>
+
 
     <div id="responseMessage"></div>
 </body>
