@@ -25,7 +25,7 @@ export async function populateEvents() {
 
             // Make sure we have a valid timestamp
             if (date && author && name && location) {
-                const eventDate = Date.toDate(); // Convert Firestore Timestamp to JavaScript Date object
+                const eventDate = date.toDate(); // Correctly convert Firestore Timestamp to JavaScript Date object
                 console.log("Event Date:", eventDate); // Debugging to see the event date
 
                 // Calculate the difference in time from the current date
