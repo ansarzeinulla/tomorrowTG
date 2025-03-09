@@ -1,5 +1,5 @@
 import { db } from "./firebase.js";
-import { collection, addDoc, Timestamp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
+import { collection, doc, addDoc, Timestamp, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
 // Function to handle sending event to Firestore
 async function sendEvent(eventData) {
@@ -83,24 +83,23 @@ document.getElementById("loginButton").addEventListener("click", async function(
             const name = document.getElementById("eventName").value.trim();
             const author = document.getElementById("eventAuthor").value.trim();
             const location = document.getElementById("eventLocation").value.trim();
-            const date = document.getElementById("eventDate").value;
-
-            // Capture the current timestamp for when the event is created
-            const timestamp = new Date();
+            const dateTime = document.getElementById("eventDateTime").value;  // Get the datetime-local input
 
             // Validate inputs
-            if (!name || !author || !location || !date) {
+            if (!name || !author || !location || !dateTime) {
                 alert("All fields are required.");
                 return;
             }
+
+            // Convert datetime-local string to a Date object
+            const eventDateTime = new Date(dateTime);
 
             // Create the event data object
             const eventData = {
                 name,
                 author,
                 location,
-                date: Timestamp.fromDate(new Date(date)), // Convert to Firestore Timestamp
-                timestamp: Timestamp.fromDate(timestamp), // Store the current timestamp
+                date: Timestamp.fromDate(eventDateTime),  // Send combined date and time as a Firestore timestamp
             };
 
             // Call the function to send the event data to Firestore
