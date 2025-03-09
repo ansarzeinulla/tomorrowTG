@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Events</title>
- <script src="send-events.js" type="module"></script>
+    <script src="send-events.js" type="module"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h2 id="loginHeader">Login</h2>
@@ -23,6 +24,10 @@
             <input type="text" id="eventAuthor" placeholder="Event Author">
             <input type="text" id="eventLocation" placeholder="Event Location">
             <input type="date" id="eventDate" placeholder="Event Date">
+            
+            <!-- Hidden field for timestamp -->
+            <input type="hidden" id="eventTimestamp">
+
             <button type="submit">Send Event</button>
         </form>
     </div>
