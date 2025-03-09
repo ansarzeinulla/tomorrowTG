@@ -137,11 +137,18 @@ function getWeekNumber(timestamp) {
     // Get the day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
     const dayOfWeek = date.getDay();
 
-    // Adjust the week number calculation to account for Monday as the start of the week
-    const adjustedDayOfWeek = (dayOfWeek === 0) ? 7 : dayOfWeek; // If it's Sunday (0), treat it as 7
-    console.log( Math.ceil((days + adjustedDayOfWeek) / 7));
-    return Math.ceil((days + adjustedDayOfWeek) / 7);
+    // Adjust the day of the week to treat Monday as the first day of the week
+    // If it's Sunday (0), treat it as day 7 (last day of the week)
+    const adjustedDayOfWeek = (dayOfWeek === 0) ? 7 : dayOfWeek;
+
+    // Adjust the calculation to use Monday as the first day of the week
+    // If the days are less than 0, we should treat the week as the previous week
+    const weekNumber = Math.ceil((days + adjustedDayOfWeek - 1) / 7);
+
+    console.log(weekNumber);
+    return weekNumber;
 }
+
 
 // Function to format timestamp as a valid Firestore document ID
 function formatTimestampToId(timestamp) {
