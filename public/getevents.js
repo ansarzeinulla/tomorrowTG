@@ -21,10 +21,10 @@ export async function populateEvents() {
             console.log("Event Data from doc:", eventData); // Debugging to see event data
 
             // Get event details
-            const { author, name, location, Date } = eventData;
+            const { author, name, location, date } = eventData;
 
             // Make sure we have a valid timestamp
-            if (Date && author && name && location) {
+            if (date && author && name && location) {
                 const eventDate = Date.toDate(); // Convert Firestore Timestamp to JavaScript Date object
                 console.log("Event Date:", eventDate); // Debugging to see the event date
 
