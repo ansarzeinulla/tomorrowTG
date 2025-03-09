@@ -33,4 +33,4 @@ jobs:
 
     # Deploy to Firebase Hosting (if you already have the static files)
     - name: Deploy to Firebase Hosting
-      run: firebase deploy --only hosting --project your-project-id --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
+      run: firebase deploy --only hosting --project oxford-ansar --token ${{ secrets.FIREBASE_AUTH_TOKEN }}
