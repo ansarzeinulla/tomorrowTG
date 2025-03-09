@@ -20,31 +20,33 @@
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            background-color: #ffcc00;
-            border: 10px solid #ff9900;
             display: flex;
             justify-content: center;
             align-items: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
 
         .wheel {
             position: absolute;
             width: 100%;
             height: 100%;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            border-radius: 50%;
+            clip-path: circle(50%);
             transform-origin: center;
             transition: transform 3s ease-in-out;
         }
 
-        .wheel span {
+        .wheel div {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: white;
+            width: 50%;
+            height: 50%;
+            background-color: red;
+            transform-origin: 100% 100%;
+        }
+
+        .green {
+            background-color: green;
         }
 
         .spin-btn {
@@ -79,12 +81,20 @@
     <div>
         <div class="wheel-container">
             <div id="wheel" class="wheel">
-                <span>Spin me!</span>
+                <!-- 99% Red -->
+                <div class="section red" style="transform: rotate(0deg);"></div>
+                <div class="section red" style="transform: rotate(3.6deg);"></div>
+                <div class="section red" style="transform: rotate(7.2deg);"></div>
+                <div class="section red" style="transform: rotate(10.8deg);"></div>
+                <div class="section red" style="transform: rotate(14.4deg);"></div>
+                <div class="section red" style="transform: rotate(18deg);"></div>
+                <!-- 1% Green -->
+                <div class="section green" style="transform: rotate(360 - 3.6deg);"></div>
             </div>
         </div>
         <button class="spin-btn" id="spinButton">Spin</button>
-        <div id="result" class="result hidden">Result: You Win!</div>
-        <div id="loseMessage" class="result hidden">Result: You Lose!</div>
+        <div id="result" class="result hidden">You Win!</div>
+        <div id="loseMessage" class="result hidden">You Lose!</div>
     </div>
 
     <script>
@@ -94,30 +104,26 @@
         const loseMessageDiv = document.getElementById('loseMessage');
 
         spinButton.addEventListener('click', () => {
-            // Generate a random number between 0 and 1
-            const chance = Math.random();
+            // Generate a random number between 0 and 360 (angle of rotation)
+            const randomRotation = Math.floor(Math.random() * 360);
 
-            // If the random number is less than 0.01 (1% chance), it's a win
-            if (chance <= 0.01) {
-                // Show the win result
-                resultDiv.classList.remove('hidden');
-                loseMessageDiv.classList.add('hidden');
-                wheel.style.transform = `rotate(${360 * 10}deg)`; // Spin the wheel 10 times
-            } else {
-                // Show the lose result
-                resultDiv.classList.add('hidden');
-                loseMessageDiv.classList.remove('hidden');
-                wheel.style.transform = `rotate(${360 * 10}deg)`; // Spin the wheel 10 times
-            }
+            // Show the spinning animation
+            wheel.style.transform = `rotate(${randomRotation + 3600}deg)`; // Spin 10 full rotations
 
-            // Reset the wheel spin after the animation ends
+            // Reset the results divs
+            resultDiv.classList.add('hidden');
+            loseMessageDiv.classList.add('hidden');
+
+            // Wait until the wheel finishes spinning, then display the result
             setTimeout(() => {
-                wheel.style.transition = 'none';
-                wheel.style.transform = 'rotate(0deg)';
-                setTimeout(() => {
-                    wheel.style.transition = 'transform 3s ease-in-out';
-                }, 50);
-            }, 3000);
+                // After spinning, check if the green section is at the top (i.e., angle is between 0 and 3.6 degrees)
+                const finalRotation = randomRotation % 360;
+                if (finalRotation <= 3.6) {
+                    resultDiv.classList.remove('hidden');
+                } else {
+                    loseMessageDiv.classList.remove('hidden');
+                }
+            }, 3000); // Delay matches the spinning time (3 seconds)
         });
     </script>
 </body>

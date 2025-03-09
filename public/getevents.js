@@ -82,7 +82,7 @@ export async function populateEvents() {
                 const formattedDate = formatEventDate(event.date); // Format the date using the new function
 
                 // Create the event label: "Date: Name 'at' Location (author)"
-                eventLabel.textContent = `${formattedDate} - ${event.name} at ${event.location} (${event.author})`;
+                eventLabel.textContent = `${formattedDate} - ${event.name} at ${event.location}`;
                 eventsContainer.appendChild(eventLabel);
             });
         }
