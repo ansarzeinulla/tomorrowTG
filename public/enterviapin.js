@@ -139,7 +139,7 @@ function getWeekNumber(timestamp) {
 
     // Adjust the week number calculation to account for Monday as the start of the week
     const adjustedDayOfWeek = (dayOfWeek === 0) ? 7 : dayOfWeek; // If it's Sunday (0), treat it as 7
-    
+    console.log( Math.ceil((days + adjustedDayOfWeek) / 7));
     return Math.ceil((days + adjustedDayOfWeek) / 7);
 }
 
