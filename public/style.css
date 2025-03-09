@@ -1,0 +1,77 @@
+body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+    gap: 20px;
+}
+
+.column {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+}
+
+textarea, input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+textarea {
+    max-height: 150px; /* Limit the height of the textarea */
+    max-width: 100%; /* Ensures the width stays within the container */
+    overflow: auto; /* Adds a scrollbar when the content exceeds max-height */
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#usersContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Adds spacing between buttons */
+    align-items: start; /* Aligns buttons to the left */
+}
+
+.user-button {
+    width: 100%; /* Makes the buttons take full width */
+    padding: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left; /* Aligns text inside buttons */
+}
+
+/* Media Queries */
+
+/* For devices with a screen width of 768px or less (e.g., tablets and mobile phones) */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        align-items: center;
+    }
+    .column {
+        width: 90%; /* Takes up most of the screen width */
+        margin-bottom: 20px; /* Adds spacing between columns */
+    }
+}
+
+/* For devices with a screen width of 480px or less (e.g., smaller phones) */
+@media (max-width: 480px) {
+    button {
+        font-size: 14px; /* Adjusts button font size for smaller screens */
+        padding: 8px 16px; /* Adjusts padding for buttons */
+    }
+    textarea {
+        max-height: 120px; /* Makes the textarea a bit smaller on very small screens */
+    }
+}
