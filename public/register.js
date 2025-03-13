@@ -31,7 +31,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
             nick,
             tgnick,
             pin,
-            vip: "noob",
+            vip: "king",
             last_time: Timestamp.now(),
             ishere: false
         };
