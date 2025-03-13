@@ -18,8 +18,8 @@ async function loginWithPin(username, pin) {
     username = username.trim();
     pin = pin.trim();
 
-    if (username.length < 5 || username.length > 20) {
-        alert("Username must be between 5 and 20 characters.");
+    if (username.length < 3 || username.length > 25) {
+        alert("Username must be between 3 and 25 characters.");
         return false;
     }
 
