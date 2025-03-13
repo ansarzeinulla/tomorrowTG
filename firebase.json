@@ -27,6 +27,18 @@
       {
         "source": "/casino",
         "destination": "/wheel.html"
+      },
+      {
+        "source": "/register",
+        "destination": "/register.html"
+      },
+      {
+        "source": "/reg",
+        "destination": "/register.html"
+      },
+      {
+        "source": "/registration",
+        "destination": "/register.html"
       }
     ]
   }

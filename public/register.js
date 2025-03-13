@@ -16,6 +16,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         return;
     }
 
+
     try {
         const userDocRef = doc(db, "users", nick);
         const userSnap = await getDoc(userDocRef);
@@ -47,10 +48,12 @@ document.getElementById("registerForm").addEventListener("submit", async functio
 
 // Function to validate input fields
 function validateInput(name, nick, tgnick, pin) {
-    const nameValid = name.length >= 4 && name.length <= 25;
-    const nickValid = nick.length >= 4 && nick.length <= 25;
-    const tgnickValid = tgnick.length >= 4 && tgnick.length <= 25;
+    const onlyEnglishRegex = /^[a-zA-Z0-9]*$/;
+    const nameValid = name.length >= 3 && name.length <= 25;
+    const nickValid = nick.length >= 3 && nick.length <= 25 && onlyEnglishRegex.test(nick);
+    const tgnickValid = tgnick.length >= 3 && tgnick.length <= 25 && onlyEnglishRegex.test(tgnick);
     const pinValid = /^\d{0,6}$/.test(pin);
 
     return nameValid && nickValid && tgnickValid && pinValid;
 }
+
