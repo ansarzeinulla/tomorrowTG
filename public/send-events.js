@@ -18,11 +18,11 @@ async function loginWithPin(username, pin) {
     username = username.trim();
     pin = pin.trim();
 
+    //Validation
     if (username.length < 3 || username.length > 25) {
         alert("Username must be between 3 and 25 characters.");
         return false;
     }
-
     if (!/^\d{1,6}$/.test(pin) || parseInt(pin) < 0 || parseInt(pin) > 999999) {
         alert("PIN must be a 6-digit number (000000 - 999999).");
         return false;
@@ -114,13 +114,14 @@ document.getElementById("sendEventForm").addEventListener("submit", function(eve
     document.getElementById("actionButtons").style.display = "block";
 });
 
+
+//We are formatting the TimeStamp to better date/time format
 function formatEventDate(date) {
     const monthNames = [
         "Jan", "Feb", "Mar", "Apr", "May", "Jun",
         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
-
-    const month = monthNames[date.getMonth()]; // Get month name
+    const month = monthNames[date.getMonth()];
     const day = date.getDate();
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
@@ -131,10 +132,9 @@ function formatEventDate(date) {
 // Function to get events by author and display them
 export async function getMyEvents() {
     const eventsContainer = document.getElementById('eventsContainer');
-    
     if (!eventsContainer) {
         console.error("eventsContainer element not found.");
-        return; // Exit if the element doesn't exist
+        return;
     }
 
     eventsContainer.innerHTML = '';  // Clear existing events
@@ -149,15 +149,12 @@ export async function getMyEvents() {
         const eventsRef = collection(db, 'events');
         const q = query(eventsRef, where("author", "==", authorName));
         const snapshot = await getDocs(q);
-
         const events = [];
 
         snapshot.forEach(docSnap => {
             const eventData = docSnap.data();
             const docId = docSnap.id;
-
             const { author, name, location, date } = eventData;
-
             if (date && author && name && location) {
                 const eventDate = date.toDate();
                 events.push({
@@ -169,7 +166,7 @@ export async function getMyEvents() {
                 });
             }
         });
-
+        //Now events must contain all the events Data
         if (events.length === 0) {
             eventsContainer.innerHTML = '<p>No events found for this author.</p>';
         } else {
@@ -197,7 +194,6 @@ document.getElementById("getMyEventsBtnTrigger").addEventListener("click", funct
 // Function to delete event
 export async function deleteEvent() {
     const eventId = document.getElementById('eventIdInput').value.trim();
-
     if (!eventId) {
         alert("Please enter a valid event ID.");
         return;
@@ -220,7 +216,6 @@ export async function deleteEvent() {
         alert("Error deleting event. Please try again.");
     }
 }
-
 
 // Handle delete event form submission
 document.getElementById("deleteEventBtn").addEventListener("click", function() {

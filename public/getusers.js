@@ -4,31 +4,31 @@ import { doc, getDoc, collection, getDocs } from "https://www.gstatic.com/fireba
 // Function to fetch and filter users
 export async function fetchAndDisplayUsers() {
     const inputText = document.getElementById("inputText").value.trim();
-    const searchNicks = inputText 
-        ? inputText.split("\n").map(line => line.trim().toLowerCase()) 
-        : [];
+    const searchNicks = inputText ? inputText.split("\n").map(line => line.trim().toLowerCase()) : [];
 
     try {
         let usersList = [];
+
+        //if searchNicks == Empty then we search for People who are in the Hub at the moment,
+        //but if searchNicks != Empty then we search for People with that nick
 
         if (searchNicks.length > 0) {
             // Search directly by document names instead of fetching all users
             for (const nick of searchNicks) {
                 const userDoc = doc(db, "users", nick);
                 const userSnap = await getDoc(userDoc);
-
                 if (userSnap.exists()) {
                     const userData = userSnap.data();
                     usersList.push(userData);
                 } else {
-                    console.log(`User ${nick} not found.`);
+                    //USER IS NOT FOUND
+                    //IGNORE
                 }
             }
         } else {
             // Fetch all users and filter by ishere === true
             const usersCollection = collection(db, "users");
             const usersSnapshot = await getDocs(usersCollection);
-
             usersSnapshot.forEach(doc => {
                 let userData = doc.data();
                 if (userData.ishere === true) {
@@ -36,7 +36,6 @@ export async function fetchAndDisplayUsers() {
                 }
             });
         }
-
         displayUsers(usersList);
     } catch (error) {
         console.error("Error fetching users:", error);
@@ -68,6 +67,7 @@ function displayUsers(users) {
             button.style.textShadow = "0 0 10px gold, 0 0 20px orange";
         }
 
+        //Link to telegram
         button.onclick = () => {
             window.location.href = `https://t.me/${user.tgnick}`;
         };
@@ -76,14 +76,14 @@ function displayUsers(users) {
         allNicks.push(`@${user.nick}`);
     });
 
-    // Copy all nicks to clipboard
+    // Copy all nicks to clipboard (Буфер обмена)
     const nickString = allNicks.join(" ");
     navigator.clipboard.writeText(nickString).then(() => {
         showToast("Nicks copied to clipboard!");
     }).catch(err => console.error("Failed to copy:", err));
 }
 
-// Small toast notification function (non-intrusive)
+// Small toast notification function (Просто показывает на экран на пару секуд какой-то текст)
 function showToast(message) {
     let toast = document.createElement("div");
     toast.textContent = message;

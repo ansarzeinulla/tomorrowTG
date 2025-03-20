@@ -36,14 +36,17 @@
     <script type="module">
         import { fetchAndDisplayUsers } from "./getusers.js";
         import { loginWithPin } from "./enterviapin.js";
-        import { populateEvents } from "./getevents.js"; // Import the populateEvents function
+        import { populateEvents } from "./getevents.js";
 
-        // Call populateEvents function after the DOM is loaded
+        // Call populateEvents function after the DOM(the current index.html Page) is loaded 
         document.addEventListener('DOMContentLoaded', () => {
             populateEvents(); // This will populate the events container
         });
 
+        //Button for searching for users
         document.getElementById("fetchButton").addEventListener("click", fetchAndDisplayUsers);
+
+        //Button for Signing In
         document.getElementById("enterButton").addEventListener("click", () => {
             loginWithPin(
                 document.getElementById("loginInput").value,

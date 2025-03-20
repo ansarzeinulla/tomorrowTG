@@ -1,8 +1,9 @@
 import { db } from "./firebase.js";
 import { collection, doc, setDoc, Timestamp, getDoc } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
+//We get the button from register.html and add a function to it for click:
 document.getElementById("registerForm").addEventListener("submit", async function(event) {
-    event.preventDefault();
+    event.preventDefault(); // WTF is this?? I do not know myself
 
     const name = document.getElementById("name").value.trim();
     const nick = document.getElementById("nick").value.trim();
@@ -10,12 +11,11 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     const pin = document.getElementById("pin").value.trim();
     const messageBox = document.getElementById("message");
 
-    // Validation
+    // Validation of data
     if (!validateInput(name, nick, tgnick, pin)) {
         messageBox.textContent = "Invalid input. Please follow the rules.";
         return;
     }
-
 
     try {
         const userDocRef = doc(db, "users", nick);
@@ -31,7 +31,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
             nick,
             tgnick,
             pin,
-            vip: "king",
+            vip: "king", //For current registration
             last_time: Timestamp.now(),
             ishere: false
         };
@@ -48,11 +48,11 @@ document.getElementById("registerForm").addEventListener("submit", async functio
 
 // Function to validate input fields
 function validateInput(name, nick, tgnick, pin) {
-    const onlyEnglishRegex = /^[a-zA-Z0-9]*$/;
+    const onlyEnglishRegex = /^[a-zA-Z0-9]*$/; //Only English Lettersa and Numbers
     const nameValid = name.length >= 3 && name.length <= 25;
     const nickValid = nick.length >= 3 && nick.length <= 25 && onlyEnglishRegex.test(nick);
     const tgnickValid = tgnick.length >= 3 && tgnick.length <= 25 && onlyEnglishRegex.test(tgnick);
-    const pinValid = /^\d{0,6}$/.test(pin);
+    const pinValid = /^\d{0,6}$/.test(pin); //6 digit max long
 
     return nameValid && nickValid && tgnickValid && pinValid;
 }
